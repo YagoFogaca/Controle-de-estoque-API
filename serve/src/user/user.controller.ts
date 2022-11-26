@@ -12,7 +12,9 @@ import { PartialUserDto } from './service/dto/partialUser.dto';
 import { UserDto } from './service/dto/user.dto';
 import { UserService } from './service/user.service';
 import { Response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('/users')
 export class UserController {
   constructor(private readonly service: UserService) {}
