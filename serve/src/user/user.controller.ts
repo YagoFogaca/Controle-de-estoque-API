@@ -68,7 +68,7 @@ export class UserController {
   @Delete('/delete-user/:id')
   async deleteUser(@Param('id') id: string, @Res() res: Response) {
     try {
-      const user = await this.service.getById(id);
+      const user = await this.service.delete(id);
       res.status(200).send(user);
     } catch (error) {
       console.log(error);
