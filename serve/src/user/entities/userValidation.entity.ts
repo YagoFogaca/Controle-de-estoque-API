@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import * as emailValidator from 'email-validator';
+import * as bcrypt from 'bcrypt';
 import { PartialUserDto } from '../service/dto/partialUser.dto';
 
 export class UserEntity {
@@ -33,6 +34,8 @@ export class UserEntity {
     if (this.password.length < 6) {
       throw new Error('Senha invalida');
     }
+
+    this.password = bcrypt.hashSync(this.password, 10);
   }
 
   private verifyRole() {
