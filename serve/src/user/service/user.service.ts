@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'crypto';
 import { IUserEntity } from '../entities/user.entity';
 import { UserRepository } from '../user.repository';
 import { PartialUserDto } from './dto/partialUser.dto';
 import { UserDto } from './dto/user.dto';
+import { UserEntity } from '../entities/userValidation.entity';
 
 @Injectable()
 export class UserService {
@@ -38,8 +38,13 @@ export class UserService {
       throw new Error('CPF ja registrado');
     }
 
-    const userCreate = { ...user, id: randomUUID() };
-    const userCreated = await this.repository.create(userCreate);
+    const userEntity = new UserEntity(user);
+    userEntity.verifyCpf();
+    userEntity.verifyEmail();
+    userEntity.verifyPassword();
+    userEntity.verifyRole();
+    userEntity.returnUser();
+    const userCreated = await this.repository.create(userEntity.returnUser());
     return userCreated;
   }
 
