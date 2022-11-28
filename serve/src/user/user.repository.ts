@@ -11,8 +11,7 @@ export class UserRepository {
   }
 
   async getById(id: string): Promise<IUserEntity> {
-    // testar esse e o findFirst
-    return await this.prisma.user.findFirstOrThrow({ where: { id: id } });
+    return await this.prisma.user.findFirst({ where: { id: id } });
   }
 
   async create(user: IUserEntity): Promise<IUserEntity> {
@@ -25,5 +24,28 @@ export class UserRepository {
 
   async delete(id: string): Promise<IUserEntity> {
     return await this.prisma.user.delete({ where: { id: id } });
+  }
+
+  async getByEmail(email: string): Promise<boolean> {
+    const verifyEmail = await this.prisma.user.findFirst({
+      where: { email: email },
+    });
+
+    if (!verifyEmail) {
+      return true;
+    }
+
+    return false;
+  }
+
+  async getByCpf(cpf: string): Promise<boolean> {
+    const verifyCpf = await this.prisma.user.findFirst({
+      where: { cpf: cpf },
+    });
+    if (!verifyCpf) {
+      return true;
+    }
+
+    return false;
   }
 }

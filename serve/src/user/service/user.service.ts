@@ -28,15 +28,16 @@ export class UserService {
   }
 
   async create(user: UserDto): Promise<IUserEntity> {
-    // const verifyEmail = await this.repository.getByEmail(user.email);
-    // if (verifyEmail) {
-    //   throw new Error('Email já registrado');
-    // }
+    const verifyEmail = await this.repository.getByEmail(user.email);
+    if (!verifyEmail) {
+      throw new Error('Email já registrado');
+    }
 
-    // const verifyCpf = await this.repository.getByCpf(user.cpf);
-    // if (verifyCpf) {
-    //   throw new Error('CPF ja registrado');
-    // }
+    const verifyCpf = await this.repository.getByCpf(user.cpf);
+    if (!verifyCpf) {
+      throw new Error('CPF ja registrado');
+    }
+
     const userCreate = { ...user, id: randomUUID() };
     const userCreated = await this.repository.create(userCreate);
     return userCreated;

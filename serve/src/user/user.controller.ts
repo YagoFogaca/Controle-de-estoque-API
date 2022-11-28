@@ -63,7 +63,7 @@ export class UserController {
       res.status(200).send(userUpdate);
     } catch (error) {
       console.log(error);
-      res.status(400).send(error.message);
+      res.status(400).send(error.meta.target[0] + ' já registrado');
     }
   }
 
