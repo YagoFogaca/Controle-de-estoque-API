@@ -39,12 +39,7 @@ export class UserService {
     }
 
     const userEntity = new UserEntity(user);
-    userEntity.verifyCpf();
-    userEntity.verifyEmail();
-    userEntity.verifyPassword();
-    userEntity.verifyRole();
-    userEntity.returnUser();
-    const userCreated = await this.repository.create(userEntity.returnUser());
+    const userCreated = await this.repository.create(userEntity.verifyUser());
     return userCreated;
   }
 

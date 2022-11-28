@@ -17,31 +17,35 @@ export class UserEntity {
     this.role = role;
   }
 
-  verifyCpf() {
+  private verifyCpf() {
     if (this.cpf.length < 11) {
       throw new Error('CPF invalido');
     }
   }
 
-  verifyEmail() {
+  private verifyEmail() {
     if (!emailValidator.validate(this.email)) {
       throw new Error('Email invalido');
     }
   }
 
-  verifyPassword() {
+  private verifyPassword() {
     if (this.password.length < 6) {
       throw new Error('Senha invalida');
     }
   }
 
-  verifyRole() {
+  private verifyRole() {
     if (this.role !== 'admin' && this.role !== 'profile') {
       throw new Error('Tipo de usuário inválido');
     }
   }
 
-  returnUser() {
+  verifyUser() {
+    this.verifyCpf();
+    this.verifyEmail();
+    this.verifyPassword();
+    this.verifyRole();
     return {
       id: randomUUID(),
       cpf: this.cpf,
