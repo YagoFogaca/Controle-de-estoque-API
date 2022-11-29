@@ -65,7 +65,7 @@ export class UserService {
       return 'Usuário deletado com sucesso';
     } catch (error) {
       console.log(error);
-      return 'Usuário não encontrado';
+      throw new Error('Usuário não encontrado');
     }
   }
 }
