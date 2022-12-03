@@ -6,6 +6,5 @@ export class SupplyEntry {
   name_supply: string;
   amount: number;
   unity: string;
-  date: Date;
-  time: Date;
+  entry_date: Date;
 }
