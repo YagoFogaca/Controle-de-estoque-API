@@ -7,6 +7,5 @@ export class SupplyOutput {
   amount: number;
   unity: string;
   requester: string;
-  date: Date;
-  time: Date;
+  output_date: Date;
 }
