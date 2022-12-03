@@ -20,12 +20,12 @@ export class SuppliesController {
     return this.suppliesService.create(createSupplyDto);
   }
 
-  @Get('/get-all')
+  @Get('/find-all')
   findAll() {
     return this.suppliesService.findAll();
   }
 
-  @Get('/get-one/:id')
+  @Get('/find-one/:id')
   findOne(@Param('id') id: string) {
     return this.suppliesService.findOne(id);
   }
@@ -33,30 +33,6 @@ export class SuppliesController {
   @Patch('/update/:id')
   update(@Param('id') id: string, @Body() updateSupplyDto: UpdateSupplyDto) {
     return this.suppliesService.update(id, updateSupplyDto);
-  }
-
-  // Essas duas funções não teram endpoint, somente para entry e output
-
-  @Patch('/update-output/:id')
-  supplyOutput(
-    @Param('id') id: string,
-    @Body() updateSupplyDto: UpdateSupplyDto,
-  ) {
-    return this.suppliesService.supplyOutput(
-      id,
-      updateSupplyDto.output_quantity,
-    );
-  }
-
-  @Patch('/update-input/:id')
-  supplyInput(
-    @Param('id') id: string,
-    @Body() updateSupplyDto: UpdateSupplyDto,
-  ) {
-    return this.suppliesService.supplyInput(
-      id,
-      updateSupplyDto.output_quantity,
-    );
   }
 
   @Delete('/delete/:id')
