@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { IdGenerator } from '../../utils/id-generator/id-generator';
 import * as emailValidator from 'email-validator';
 import * as bcrypt from 'bcrypt';
 import { PartialUserDto } from '../service/dto/partialUser.dto';
@@ -50,7 +50,7 @@ export class UserEntity {
     this.verifyPassword();
     this.verifyRole();
     return {
-      id: randomUUID(),
+      id: IdGenerator.idGenerator(),
       cpf: this.cpf,
       email: this.email,
       name: this.name,
