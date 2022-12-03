@@ -1,6 +1,6 @@
 import { UnitySupply } from '../../utils/enuns/enum';
 
-export class ISupply {
+export class Supply {
   id: string;
   name: string;
   unity: UnitySupply;

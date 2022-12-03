@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSupplyDto } from './dto/create-supply.dto';
 import { UpdateSupplyDto } from './dto/update-supply.dto';
-import { ISupply } from './entities/supply.entity';
+import { Supply } from './entities/supply.entity';
 import { SupplyEntity } from './entities/supplyValidation.entity';
 
 @Injectable()
 export class SuppliesService {
-  private _supplies: ISupply[] = [];
+  private _supplies: Supply[] = [];
 
   constructor(private readonly SupplyRepository) {}
 
@@ -25,11 +25,11 @@ export class SuppliesService {
     return 'Insumo criado com sucesso';
   }
 
-  async findAll(): Promise<ISupply[]> {
+  async findAll(): Promise<Supply[]> {
     return this._supplies;
   }
 
-  async findOne(id: string): Promise<ISupply> {
+  async findOne(id: string): Promise<Supply> {
     const supply = this._supplies.find((supply) => id === supply.id);
     if (!supply) {
       throw new Error('O insumo não foi encontrado.');

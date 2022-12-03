@@ -1,9 +1,9 @@
 import { CreateSupplyDto } from '../dto/create-supply.dto';
-import { ISupply } from './supply.entity';
+import { Supply } from './supply.entity';
 import { IdGenerator } from '../../utils/id-generator/id-generator';
 import { UnitySupply } from '../../utils/enuns/enum';
 
-export class SupplyEntity extends ISupply {
+export class SupplyEntity extends Supply {
   constructor({
     name,
     active,
