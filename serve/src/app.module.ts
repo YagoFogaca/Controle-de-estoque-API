@@ -5,7 +5,11 @@ import { SupplyEntryModule } from './supply-entry/supply-entry.module';
 import { SupplyOutputModule } from './supply-output/supply-output.module';
 import { SuppliesModule } from './supplies/supplies.module';
 
+// @Module({
+//   imports: [UserModule, ProfileModule, SupplyEntryModule, SupplyOutputModule, SuppliesModule],
+// })
+
 @Module({
-  imports: [UserModule, ProfileModule, SupplyEntryModule, SupplyOutputModule, SuppliesModule],
+  imports: [UserModule, SuppliesModule],
 })
 export class AppModule {}
