@@ -1,8 +1,7 @@
-import { ISupply } from 'src/supplies/entities/supply.entity';
-
 export class SupplyOutput {
   id: string;
-  id_supply: ISupply;
+  id_profile: string;
+  id_supply: string;
   name_supply: string;
   amount: number;
   unity: string;
