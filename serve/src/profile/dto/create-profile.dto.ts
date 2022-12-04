@@ -1,7 +1,5 @@
-import { IUserEntity } from 'src/user/entities/user.entity';
-
 export class CreateProfileDto {
-  user: IUserEntity;
+  id_user: string;
   title: string;
   imageURL: string;
   supply_output: string[];
