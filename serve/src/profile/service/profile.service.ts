@@ -1,23 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { IdGenerator } from 'src/utils/id-generator/id-generator';
+import { ProfileRepository } from './profile.repository';
+import { UserService } from 'src/user/service/user.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { Profile } from '../entities/profile.entity';
-import { ProfileRepository } from './profile.repository';
+import { ProfileEntity } from '../entities/profileValidation.entity';
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly profileRepository: ProfileRepository) {}
+  constructor(
+    private readonly profileRepository: ProfileRepository,
+    private readonly userService: UserService,
+  ) {}
 
   async create(profile: CreateProfileDto): Promise<string> {
-    // Colocar validação com a entidade de validação
+    await this.userService.getById(profile.userId);
 
-    const createProfile = {
-      ...profile,
-      id: IdGenerator.idGenerator(),
-    };
-
-    const profileCreated = await this.profileRepository.create(createProfile);
+    const profileEntity = new ProfileEntity(profile);
+    const profileCreated = await this.profileRepository.create(
+      profileEntity.verifyProfile(),
+    );
     if (!profileCreated) {
       throw new Error('Não foi possível criar o profile');
     }
@@ -25,7 +27,11 @@ export class ProfileService {
     return 'Profile criado com sucesso';
   }
 
-  async findAll(): Promise<Profile[]> {
+  async findAll(): Promise<Profile[] | string> {
+    const profiles = await this.profileRepository.findAll();
+    if (profiles.length <= 0) {
+      return 'Não a nenhum profile registado na aplicação';
+    }
     return await this.profileRepository.findAll();
   }
 
@@ -47,7 +53,7 @@ export class ProfileService {
       updateProfile,
     );
     if (!profileUpdated) {
-      throw new Error('O profile não foi atualizado por algum motivo');
+      throw new Error('Erro ao atualizar o profile');
     }
     return 'O profile foi atualizado com sucesso';
   }
@@ -55,7 +61,7 @@ export class ProfileService {
   async remove(id: string): Promise<string> {
     const profileDeleted = await this.profileRepository.delete(id);
     if (!profileDeleted) {
-      throw new Error('O profile não foi excluído');
+      throw new Error('O profile não encontrado.');
     }
     return 'Profile deletado com sucesso';
   }
