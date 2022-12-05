@@ -11,10 +11,57 @@ datasource db {
 }
 
 model user {
-  id       String @id @unique
+  id       String    @id @unique
   name     String
-  email    String @unique
+  email    String    @unique
   password String
-  cpf      String @unique
+  cpf      String    @unique
   role     String
+  profiles profile[]
+}
+
+model profile {
+  id            String          @id @unique
+  userId        String
+  user          user            @relation(fields: [userId], references: [id])
+  title         String
+  imageURL      String
+  supply_entry  supply_entry[]
+  supply_output supply_output[]
+}
+
+model supply {
+  id              String          @id @unique
+  name            String
+  unity           String
+  quantity_stock  Float
+  output_quantity Float
+  active          Boolean
+  supply_entry    supply_entry[]
+  supply_output   supply_output[]
+}
+
+model supply_entry {
+  id          String   @id @unique
+  profileId   String
+  supplyId    String
+  profile     profile  @relation(fields: [profileId], references: [id])
+  supply      supply   @relation(fields: [supplyId], references: [id])
+  name_supply String
+  amount      Float
+  unity       String
+  entry_date  DateTime
+}
+
+model supply_output {
+  id          String   @id @unique
+  profileId   String
+  supplyId    String
+  profile     profile  @relation(fields: [profileId], references: [id])
+  supply      supply   @relation(fields: [supplyId], references: [id])
+  name_supply String
+  amount      Float
+  unity       String
+  requester   String
+  output_date DateTime
 }
