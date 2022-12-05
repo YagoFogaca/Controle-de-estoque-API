@@ -1,5 +1,4 @@
-export class Profile {
-  id: string;
+export class CreateProfileDto {
   userId: string;
   title: string;
   imageURL: string;
