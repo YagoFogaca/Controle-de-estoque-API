@@ -6,7 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { ProfileService } from './service/profile.service';
 import { CreateProfileDto } from './service/dto/create-profile.dto';
 import { UpdateProfileDto } from './service/dto/update-profile.dto';
@@ -18,47 +20,61 @@ export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Post('/create')
-  create(@Body() createProfileDto: CreateProfileDto) {
+  async create(
+    @Body() createProfileDto: CreateProfileDto,
+    @Res() res: Response,
+  ) {
     try {
-      return this.profileService.create(createProfileDto);
+      res.status(201).send(await this.profileService.create(createProfileDto));
     } catch (error) {
       console.log(error);
+      res.status(400).send(error.message);
     }
   }
 
   @Get('/find-all')
-  findAll() {
+  async findAll(@Res() res: Response) {
     try {
-      return this.profileService.findAll();
+      res.status(200).send(await this.profileService.findAll());
     } catch (error) {
       console.log(error);
+      res.status(404).send(error.message);
     }
   }
 
   @Get('/find-one/:id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string, @Res() res: Response) {
     try {
-      return this.profileService.findOne(id);
+      res.status(200).send(await this.profileService.findOne(id));
     } catch (error) {
       console.log(error);
+      res.status(404).send(error.message);
     }
   }
 
   @Patch('/update/:id')
-  update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateProfileDto: UpdateProfileDto,
+    @Res() res: Response,
+  ) {
     try {
-      return this.profileService.update(id, updateProfileDto);
+      res
+        .status(200)
+        .send(await this.profileService.update(id, updateProfileDto));
     } catch (error) {
       console.log(error);
+      res.status(400).send(error.message);
     }
   }
 
   @Delete('/delete/:id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string, @Res() res: Response) {
     try {
-      return this.profileService.remove(id);
+      res.status(200).send(await this.profileService.remove(id));
     } catch (error) {
       console.log(error);
+      res.status(400).send(error.message);
     }
   }
 }
