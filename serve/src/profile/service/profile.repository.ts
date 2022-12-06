@@ -15,7 +15,14 @@ export class ProfileRepository {
   }
 
   async findOne(id: string): Promise<Profile> {
-    return await this.service.profile.findFirst({ where: { id: id } });
+    return await this.service.profile.findFirst({
+      where: { id: id },
+      include: {
+        supply_entry: true,
+        supply_output: true,
+        user: true,
+      },
+    });
   }
 
   async update(id: string, profile: Profile): Promise<Profile> {

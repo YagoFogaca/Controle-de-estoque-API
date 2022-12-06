@@ -10,8 +10,11 @@ export class UserRepository {
     return await this.prisma.user.findMany();
   }
 
-  async getById(id: string): Promise<IUserEntity> {
-    return await this.prisma.user.findFirst({ where: { id: id } });
+  async getById(id: string): Promise<any> {
+    return await this.prisma.user.findFirst({
+      where: { id: id },
+      select: { id: true, email: true, name: true, role: true, profiles: true },
+    });
   }
 
   async create(user: IUserEntity): Promise<IUserEntity> {
