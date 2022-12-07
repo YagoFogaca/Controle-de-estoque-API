@@ -1,9 +1,7 @@
-import { UnitySupply } from '../../utils/enuns/enum';
-
 export class Supply {
   id: string;
   name: string;
-  unity: UnitySupply;
+  unity: string;
   quantity_stock: number;
   output_quantity: number;
   active: boolean;
