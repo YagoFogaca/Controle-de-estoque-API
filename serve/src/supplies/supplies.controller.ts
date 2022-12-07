@@ -6,37 +6,70 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
 } from '@nestjs/common';
-import { SuppliesService } from './supplies.service';
-import { CreateSupplyDto } from './dto/create-supply.dto';
-import { UpdateSupplyDto } from './dto/update-supply.dto';
+import { Response } from 'express';
+import { SuppliesService } from './service/supplies.service';
+import { CreateSupplyDto } from './service/dto/create-supply.dto';
+import { UpdateSupplyDto } from './service/dto/update-supply.dto';
 
 @Controller('/supplies')
 export class SuppliesController {
   constructor(private readonly suppliesService: SuppliesService) {}
 
   @Post('/create')
-  create(@Body() createSupplyDto: CreateSupplyDto) {
-    return this.suppliesService.create(createSupplyDto);
+  async create(@Body() createSupplyDto: CreateSupplyDto, @Res() res: Response) {
+    try {
+      res.status(201).send(await this.suppliesService.create(createSupplyDto));
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error.message);
+    }
   }
 
   @Get('/find-all')
-  findAll() {
-    return this.suppliesService.findAll();
+  async findAll(@Res() res: Response) {
+    try {
+      res.status(200).send(await this.suppliesService.findAll());
+    } catch (error) {
+      console.log(error);
+      res.status(404).send(error.message);
+    }
   }
 
   @Get('/find-one/:id')
-  findOne(@Param('id') id: string) {
-    return this.suppliesService.findOne(id);
+  async findOne(@Param('id') id: string, @Res() res: Response) {
+    try {
+      res.status(200).send(await this.suppliesService.findOne(id));
+    } catch (error) {
+      console.log(error);
+      res.status(404).send(error.message);
+    }
   }
 
   @Patch('/update/:id')
-  update(@Param('id') id: string, @Body() updateSupplyDto: UpdateSupplyDto) {
-    return this.suppliesService.update(id, updateSupplyDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateSupplyDto: UpdateSupplyDto,
+    @Res() res: Response,
+  ) {
+    try {
+      res
+        .status(200)
+        .send(await this.suppliesService.update(id, updateSupplyDto));
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error.message);
+    }
   }
 
   @Delete('/delete/:id')
-  remove(@Param('id') id: string) {
-    return this.suppliesService.remove(id);
+  async remove(@Param('id') id: string, @Res() res: Response) {
+    try {
+      res.status(200).send(await this.suppliesService.remove(id));
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error.message);
+    }
   }
 }
