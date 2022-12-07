@@ -10,6 +10,6 @@ import { SuppliesModule } from './supplies/supplies.module';
 // })
 
 @Module({
-  imports: [UserModule, ProfileModule],
+  imports: [UserModule, ProfileModule, SuppliesModule],
 })
 export class AppModule {}
