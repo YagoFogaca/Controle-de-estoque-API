@@ -44,10 +44,7 @@ export class UserService {
   }
 
   async update(user: PartialUserDto, id: string): Promise<IUserEntity> {
-    const userData = await this.getById(id);
-
-    const userUpdate = Object.assign(userData, user);
-    const userUpdated = await this.repository.update(userUpdate, id);
+    const userUpdated = await this.repository.update(user, id);
     if (!userUpdated) {
       throw new Error('Erro ao atualizar o usuário.');
     }
