@@ -12,7 +12,9 @@ import { Response } from 'express';
 import { SuppliesService } from './service/supplies.service';
 import { CreateSupplyDto } from './service/dto/create-supply.dto';
 import { UpdateSupplyDto } from './service/dto/update-supply.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Supply')
 @Controller('/supplies')
 export class SuppliesController {
   constructor(private readonly suppliesService: SuppliesService) {}
