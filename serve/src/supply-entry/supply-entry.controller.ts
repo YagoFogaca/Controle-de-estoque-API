@@ -8,9 +8,9 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { SupplyEntryService } from './supply-entry.service';
-import { CreateSupplyEntryDto } from './dto/create-supply-entry.dto';
-import { UpdateSupplyEntryDto } from './dto/update-supply-entry.dto';
+import { SupplyEntryService } from './service/supply-entry.service';
+import { CreateSupplyEntryDto } from './service/dto/create-supply-entry.dto';
+import { UpdateSupplyEntryDto } from './service/dto/update-supply-entry.dto';
 
 @Controller('/supply-entry')
 export class SupplyEntryController {

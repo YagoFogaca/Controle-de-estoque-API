@@ -1,9 +1,7 @@
-import { UnitySupply } from 'src/utils/enuns/enum';
-
 export class CreateSupplyEntryDto {
-  id_supply: string;
+  supplyId: string;
   name_supply: string;
   amount: number;
-  unity: UnitySupply;
+  unity: string;
   entry_date: Date;
 }

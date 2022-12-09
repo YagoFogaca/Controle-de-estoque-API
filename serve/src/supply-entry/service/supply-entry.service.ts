@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { SuppliesService } from 'src/supplies/supplies.service';
+import { SuppliesService } from 'src/supplies/service/supplies.service';
 import { IdGenerator } from 'src/utils/id-generator/id-generator';
 import { CreateSupplyEntryDto } from './dto/create-supply-entry.dto';
 import { UpdateSupplyEntryDto } from './dto/update-supply-entry.dto';
-import { SupplyEntry } from './entities/supply-entry.entity';
-import { ProfileService } from '../profile/service/profile.service';
+import { SupplyEntry } from '../entities/supply-entry.entity';
+import { ProfileService } from '../../profile/service/profile.service';
 
 @Injectable()
 export class SupplyEntryService {
@@ -17,23 +17,23 @@ export class SupplyEntryService {
 
   async create(
     supplyEntry: CreateSupplyEntryDto,
-    id_profile: string,
+    profileId: string,
   ): Promise<string> {
     // colcoar um entidade de validação dos campos
     const createSupplyEntry = {
       ...supplyEntry,
       id: IdGenerator.idGenerator(),
-      id_profile,
+      profileId,
     };
 
     // Verificação se o insumo existe e contabilização da quantidade de entrada daquele insumo
     await this.SuppliesService.supplyInput(
-      createSupplyEntry.id_supply,
+      createSupplyEntry.supplyId,
       createSupplyEntry.amount,
     );
 
     // Verificação se o profile existe
-    await this.ProfileService.findOne(createSupplyEntry.id_profile);
+    await this.ProfileService.findOne(createSupplyEntry.supplyId);
 
     this._supply_entry.push(createSupplyEntry);
     return 'This action adds a new supplyEntry';
@@ -71,7 +71,7 @@ export class SupplyEntryService {
       if (supplyEntry.id === id) {
         this._supply_entry.splice(index, 1);
         this.SuppliesService.supplyOutput(
-          supplyEntry.id_supply,
+          supplyEntry.supplyId,
           supplyEntry.amount,
         );
       }
