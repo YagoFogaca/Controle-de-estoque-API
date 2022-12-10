@@ -1,7 +1,5 @@
 export class CreateSupplyEntryDto {
   supplyId: string;
-  name_supply: string;
+  profileId: string;
   amount: number;
-  unity: string;
-  entry_date: Date;
 }
