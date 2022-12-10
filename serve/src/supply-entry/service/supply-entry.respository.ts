@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SupplyEntry } from '../entities/supply-entry.entity';
 import { UpdateSupplyEntryDto } from './dto/update-supply-entry.dto';
 
+@Injectable()
 export class SupplyEntryRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
@@ -10,7 +12,19 @@ export class SupplyEntryRepository {
   }
 
   async findAll(): Promise<SupplyEntry[]> {
-    return await this.prismaService.supply_entry.findMany();
+    return await this.prismaService.supply_entry.findMany({
+      select: {
+        amount: true,
+        id: true,
+        entry_date: true,
+        name_supply: true,
+        profile: true,
+        profileId: true,
+        supply: true,
+        supplyId: true,
+        unity: true,
+      },
+    });
   }
 
   async findById(id: string): Promise<SupplyEntry> {
