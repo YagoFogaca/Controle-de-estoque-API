@@ -16,7 +16,9 @@ export class SupplyRepository {
   }
 
   async findById(id: string): Promise<Supply> {
-    return await this.prismaService.supply.findFirst({ where: { id: id } });
+    return await this.prismaService.supply.findFirst({
+      where: { id: id },
+    });
   }
 
   async findByName(name: string): Promise<Supply> {
