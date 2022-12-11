@@ -7,12 +7,14 @@ import { SupplyEntry } from '../entities/supply-entry.entity';
 import { ProfileService } from '../../profile/service/profile.service';
 import { CreateSupplyEntryUsecase } from './usecase/create.supply-entry';
 import { FindAllSupplyEntryUsecase } from './usecase/find-all.supply-entry';
+import { FindByIdUsecase } from './usecase/findById.supply-entry';
 
 @Injectable()
 export class SupplyEntryService {
   constructor(
     private readonly createSupplyEntry: CreateSupplyEntryUsecase,
     private readonly findAllSupplyEntryUsecase: FindAllSupplyEntryUsecase,
+    private readonly findByIdUsecase: FindByIdUsecase,
   ) {}
 
   async create(
@@ -26,15 +28,9 @@ export class SupplyEntryService {
     return this.findAllSupplyEntryUsecase.execute();
   }
 
-  // async findOne(id: string): Promise<SupplyEntry> {
-  //   const supplyEntry = this._supply_entry.find(
-  //     (supply_entry) => id === supply_entry.id,
-  //   );
-  //   if (!supplyEntry) {
-  //     throw new Error('A entrada de insumo não foi encontrado.');
-  //   }
-  //   return supplyEntry;
-  // }
+  async findOne(id: string): Promise<SupplyEntry> {
+    return await this.findByIdUsecase.execute(id);
+  }
 
   // async update(id: string, supplyEntry: UpdateSupplyEntryDto): Promise<string> {
   //   // Colocar um verificação se a quatidade de entrada também foi alterada
