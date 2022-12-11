@@ -7,7 +7,9 @@ import { SuppliesModule } from 'src/supplies/supplies.module';
 import { SupplyEntryRepository } from './service/supply-entry.respository';
 import { SupplyEntryService } from './service/supply-entry.service';
 import { CreateSupplyEntryUsecase } from './service/usecase/create.supply-entry';
+import { DeleteSupplyUsecase } from './service/usecase/delete.supply-entry';
 import { FindAllSupplyEntryUsecase } from './service/usecase/find-all.supply-entry';
+import { FindByIdUsecase } from './service/usecase/findById.supply-entry';
 import { SupplyEntryController } from './supply-entry.controller';
 
 @Module({
@@ -18,6 +20,8 @@ import { SupplyEntryController } from './supply-entry.controller';
     SupplyEntryRepository,
     CreateSupplyEntryUsecase,
     FindAllSupplyEntryUsecase,
+    FindByIdUsecase,
+    DeleteSupplyUsecase,
   ],
 })
 export class SupplyEntryModule {}

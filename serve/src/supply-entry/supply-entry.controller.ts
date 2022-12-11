@@ -33,10 +33,10 @@ export class SupplyEntryController {
     return await this.supplyEntryService.findAll();
   }
 
-  // @Get('/find-one/:id')
-  // findOne(@Param('id') id: string) {
-  //   return this.supplyEntryService.findOne(id);
-  // }
+  @Get('/find-one/:id')
+  async findById(@Param('id') id: string) {
+    return await this.supplyEntryService.findById(id);
+  }
 
   // @Patch('/update/:id')
   // update(
@@ -46,8 +46,8 @@ export class SupplyEntryController {
   //   return this.supplyEntryService.update(id, updateSupplyEntryDto);
   // }
 
-  // @Delete('/delete/:id')
-  // remove(@Param('id') id: string) {
-  //   return this.supplyEntryService.remove(id);
-  // }
+  @Delete('/delete/:id')
+  remove(@Param('id') id: string) {
+    return this.supplyEntryService.remove(id);
+  }
 }

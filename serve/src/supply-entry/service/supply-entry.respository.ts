@@ -14,15 +14,14 @@ export class SupplyEntryRepository {
   async findAll(): Promise<SupplyEntry[]> {
     return await this.prismaService.supply_entry.findMany({
       select: {
-        amount: true,
         id: true,
-        entry_date: true,
-        name_supply: true,
-        profile: true,
-        profileId: true,
-        supply: true,
         supplyId: true,
+        profileId: true,
+        name_supply: true,
+        amount: true,
+        entry_date: true,
         unity: true,
+        supply: true,
       },
     });
   }
@@ -30,6 +29,17 @@ export class SupplyEntryRepository {
   async findById(id: string): Promise<SupplyEntry> {
     return await this.prismaService.supply_entry.findFirst({
       where: { id: id },
+      select: {
+        id: true,
+        supplyId: true,
+        profileId: true,
+        name_supply: true,
+        amount: true,
+        entry_date: true,
+        unity: true,
+        supply: true,
+        profile: true,
+      },
     });
   }
 
@@ -50,6 +60,25 @@ export class SupplyEntryRepository {
   }
 
   async delete(id: string): Promise<SupplyEntry> {
-    return await this.prismaService.supply_entry.delete({ where: { id: id } });
+    return await this.prismaService.supply_entry.delete({
+      where: { id: id },
+      select: {
+        id: true,
+        supplyId: true,
+        profileId: true,
+        name_supply: true,
+        amount: true,
+        entry_date: true,
+        unity: true,
+      },
+    });
   }
 }
+// id: string;
+// profileId: string;
+// supplyId: string;
+// name_supply: string;
+// amount: number;
+// unity: string;
+// entry_date: Date;
+// }

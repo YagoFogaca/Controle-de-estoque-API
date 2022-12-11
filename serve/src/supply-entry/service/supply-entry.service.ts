@@ -8,6 +8,7 @@ import { ProfileService } from '../../profile/service/profile.service';
 import { CreateSupplyEntryUsecase } from './usecase/create.supply-entry';
 import { FindAllSupplyEntryUsecase } from './usecase/find-all.supply-entry';
 import { FindByIdUsecase } from './usecase/findById.supply-entry';
+import { DeleteSupplyUsecase } from './usecase/delete.supply-entry';
 
 @Injectable()
 export class SupplyEntryService {
@@ -15,6 +16,7 @@ export class SupplyEntryService {
     private readonly createSupplyEntry: CreateSupplyEntryUsecase,
     private readonly findAllSupplyEntryUsecase: FindAllSupplyEntryUsecase,
     private readonly findByIdUsecase: FindByIdUsecase,
+    private readonly deleteSupplyUsecase: DeleteSupplyUsecase,
   ) {}
 
   async create(
@@ -28,7 +30,7 @@ export class SupplyEntryService {
     return this.findAllSupplyEntryUsecase.execute();
   }
 
-  async findOne(id: string): Promise<SupplyEntry> {
+  async findById(id: string): Promise<SupplyEntry> {
     return await this.findByIdUsecase.execute(id);
   }
 
@@ -45,16 +47,8 @@ export class SupplyEntryService {
   //   return 'Entrada de insumo atualizada com sucesso';
   // }
 
-  // async remove(id: string): Promise<string> {
-  //   this._supply_entry.map((supplyEntry, index) => {
-  //     if (supplyEntry.id === id) {
-  //       this._supply_entry.splice(index, 1);
-  //       this.SuppliesService.supplyOutput(
-  //         supplyEntry.supplyId,
-  //         supplyEntry.amount,
-  //       );
-  //     }
-  //   });
-  //   return 'Entrada de insumo deletada com sucesso';
-  // }
+  async remove(id: string): Promise<string> {
+    await this.deleteSupplyUsecase.execute(id);
+    return 'Entrada de insumo deletada com sucesso';
+  }
 }
