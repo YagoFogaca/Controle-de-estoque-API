@@ -38,31 +38,34 @@ export class SuppliesService {
     return 'Insumo atualizado com sucesso';
   }
 
-  async supplyOutput(id: string, output_quantity: number) {
-    const supply = await this.findOne(id);
+  // async supplyOutput(id: string, output_quantity: number) {
+  //   const supply = await this.findOne(id);
 
-    supply.output_quantity += output_quantity;
-    supply.quantity_stock -= output_quantity;
+  //   supply.output_quantity += output_quantity;
+  //   supply.quantity_stock -= output_quantity;
 
-    this._supplies.map((findSupply, index) => {
-      if (findSupply.id === id) {
-        this._supplies.splice(index, 1, supply);
-      }
-    });
-    return 'Insumo atualizado com sucesso';
-  }
+  //   this._supplies.map((findSupply, index) => {
+  //     if (findSupply.id === id) {
+  //       this._supplies.splice(index, 1, supply);
+  //     }
+  //   });
+  //   return 'Insumo atualizado com sucesso';
+  // }
 
-  async supplyInput(id: string, amount: number) {
-    const supply = await this.findOne(id);
+  async supplyEntry(id: string, amount: number): Promise<boolean> {
+    try {
+      const supply = await this.findByIdUsecase.execute(id);
+      supply.quantity_stock += amount;
 
-    supply.quantity_stock += amount;
+      await this.updateSupplyUsecase.execute(id, {
+        quantity_stock: supply.quantity_stock,
+      });
 
-    this._supplies.map((findSupply, index) => {
-      if (findSupply.id === id) {
-        this._supplies.splice(index, 1, supply);
-      }
-    });
-    return 'Insumo atualizado com sucesso';
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
   async remove(id: string): Promise<string> {
