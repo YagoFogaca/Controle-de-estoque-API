@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateSupplyValidation } from 'src/supplies/validations/updateSupply.validation';
 import { UpdateSupplyDto } from '../dto/update-supply.dto';
 import { SupplyRepository } from '../supply.repository';
 import { FindByIdUsecase } from './findById.supply';
@@ -12,13 +11,6 @@ export class UpdateSupplyUsecase {
   ) {}
 
   async execute(id: string, supply: UpdateSupplyDto) {
-    const supplyUpdate = await this.findByIdUsecase.execute(id);
-
-    const updateProfile = Object.assign(supplyUpdate, supply);
-
-    const verificationSupply = new UpdateSupplyValidation(updateProfile);
-    verificationSupply.verifySupplyUpdate();
-
     const supplyUpdated = this.supplyRepository.update(id, supply);
     if (!supplyUpdated) {
       throw new Error('Insumo não foi atualizado');
