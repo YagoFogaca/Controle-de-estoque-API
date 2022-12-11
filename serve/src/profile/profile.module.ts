@@ -9,5 +9,6 @@ import { UserModule } from 'src/user/user.module';
   imports: [DataBaseModule, UserModule],
   controllers: [ProfileController],
   providers: [ProfileService, ProfileRepository],
+  exports: [ProfileService],
 })
 export class ProfileModule {}
