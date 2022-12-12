@@ -6,8 +6,12 @@ import { Injectable } from '@nestjs/common';
 export class FindAllUsecase {
   constructor(private readonly supplyRepository: SupplyRepository) {}
 
-  async execute(): Promise<Supply[]> {
-    // colocar validação
-    return await this.supplyRepository.findAll();
+  async execute(): Promise<string | Supply[]> {
+    const supplies = await this.supplyRepository.findAll();
+    if (supplies.length <= 0) {
+      return 'Não a insumos registrados';
+    }
+
+    return supplies;
   }
 }

@@ -15,6 +15,7 @@ export class UpdateSupplyUsecase {
     if (!supplyUpdated) {
       throw new Error('Insumo não foi atualizado');
     }
+
     return supplyUpdated;
   }
 }

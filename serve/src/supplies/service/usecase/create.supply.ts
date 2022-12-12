@@ -20,7 +20,6 @@ export class CreateSupplyUsecase {
     const supplyCreated = await this.supplyRepository.create(
       verificationSupply.verifySupply(),
     );
-
     if (!supplyCreated) {
       throw new Error('Não foi possível criar um insumo.');
     }

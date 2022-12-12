@@ -7,6 +7,8 @@ import { FindAllUsecase } from './usecase/findAll.supply';
 import { FindByIdUsecase } from './usecase/findById.supply';
 import { DeleteSupplyUsecase } from './usecase/delete.supply';
 import { UpdateSupplyUsecase } from './usecase/update.supply';
+import { SupplyEntryUsecase } from './usecase/entry.supply';
+import { SupplyOutputUsecase } from './usecase/output.supply';
 
 @Injectable()
 export class SuppliesService {
@@ -18,6 +20,8 @@ export class SuppliesService {
     private readonly findByIdUsecase: FindByIdUsecase,
     private readonly updateSupplyUsecase: UpdateSupplyUsecase,
     private readonly deleteSupplyUsecase: DeleteSupplyUsecase,
+    private readonly supplyEntryUsecase: SupplyEntryUsecase,
+    private readonly supplyOutputUsecase: SupplyOutputUsecase,
   ) {}
 
   async create(supply: CreateSupplyDto): Promise<string> {
@@ -25,7 +29,7 @@ export class SuppliesService {
     return 'Insumo criado com sucesso';
   }
 
-  async findAll(): Promise<Supply[]> {
+  async findAll(): Promise<Supply[] | string> {
     return await this.findAllUsecase.execute();
   }
 
@@ -38,40 +42,16 @@ export class SuppliesService {
     return 'Insumo atualizado com sucesso';
   }
 
-  async supplyOutput(id: string, amount: number): Promise<boolean> {
-    try {
-      const supply = await this.findByIdUsecase.execute(id);
-      supply.quantity_stock = supply.quantity_stock - amount;
-
-      await this.updateSupplyUsecase.execute(id, {
-        quantity_stock: supply.quantity_stock,
-      });
-
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
-
-  async supplyEntry(id: string, amount: number): Promise<boolean> {
-    try {
-      const supply = await this.findByIdUsecase.execute(id);
-      supply.quantity_stock += amount;
-
-      await this.updateSupplyUsecase.execute(id, {
-        quantity_stock: supply.quantity_stock,
-      });
-
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
-
   async remove(id: string): Promise<string> {
     await this.deleteSupplyUsecase.execute(id);
     return 'Insumo deletado com sucesso';
+  }
+
+  async supplyOutput(id: string, amount: number): Promise<boolean> {
+    return await this.supplyOutputUsecase.execute(id, amount);
+  }
+
+  async supplyEntry(id: string, amount: number): Promise<boolean> {
+    return await this.supplyEntryUsecase.execute(id, amount);
   }
 }

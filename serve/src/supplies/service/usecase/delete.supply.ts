@@ -6,8 +6,12 @@ import { Injectable } from '@nestjs/common';
 export class DeleteSupplyUsecase {
   constructor(private readonly supplyRepository: SupplyRepository) {}
 
-  async execute(id: string): Promise<Supply> {
-    // colocar validação
-    return await this.supplyRepository.delete(id);
+  async execute(id: string): Promise<string> {
+    const supplyDeleted = await this.supplyRepository.delete(id);
+    if (!supplyDeleted) {
+      throw new Error('Não foi possível deletar um insumo');
+    }
+
+    return 'Insumo deletado com sucesso';
   }
 }
