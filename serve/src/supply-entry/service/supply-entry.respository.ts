@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { connect } from 'rxjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SupplyEntry } from '../entities/supply-entry.entity';
 import { UpdateSupplyEntryDto } from './dto/update-supply-entry.dto';
@@ -29,25 +30,12 @@ export class SupplyEntryRepository {
   async findById(id: string): Promise<SupplyEntry> {
     return await this.prismaService.supply_entry.findFirst({
       where: { id: id },
-      select: {
-        id: true,
-        supplyId: true,
-        profileId: true,
-        name_supply: true,
-        amount: true,
-        entry_date: true,
-        unity: true,
-        supply: true,
+      include: {
         profile: true,
+        supply: true,
       },
     });
   }
-
-  //   async findByName(name: string): Promise<SupplyEntry> {
-  //     return await this.prismaService.supply_entry.findFirst({
-  //       where: { name: name },
-  //     });
-  //   }
 
   async update(
     id: string,
@@ -62,23 +50,9 @@ export class SupplyEntryRepository {
   async delete(id: string): Promise<SupplyEntry> {
     return await this.prismaService.supply_entry.delete({
       where: { id: id },
-      select: {
-        id: true,
-        supplyId: true,
-        profileId: true,
-        name_supply: true,
-        amount: true,
-        entry_date: true,
-        unity: true,
+      include: {
+        supply: true,
       },
     });
   }
 }
-// id: string;
-// profileId: string;
-// supplyId: string;
-// name_supply: string;
-// amount: number;
-// unity: string;
-// entry_date: Date;
-// }

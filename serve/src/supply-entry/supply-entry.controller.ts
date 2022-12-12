@@ -38,13 +38,13 @@ export class SupplyEntryController {
     return await this.supplyEntryService.findById(id);
   }
 
-  // @Patch('/update/:id')
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateSupplyEntryDto: UpdateSupplyEntryDto,
-  // ) {
-  //   return this.supplyEntryService.update(id, updateSupplyEntryDto);
-  // }
+  @Patch('/update/:id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateSupplyEntryDto: UpdateSupplyEntryDto,
+  ) {
+    return await this.supplyEntryService.update(id, updateSupplyEntryDto);
+  }
 
   @Delete('/delete/:id')
   remove(@Param('id') id: string) {

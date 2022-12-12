@@ -9,6 +9,7 @@ import { CreateSupplyEntryUsecase } from './usecase/create.supply-entry';
 import { FindAllSupplyEntryUsecase } from './usecase/find-all.supply-entry';
 import { FindByIdUsecase } from './usecase/findById.supply-entry';
 import { DeleteSupplyUsecase } from './usecase/delete.supply-entry';
+import { UpdateSupplyUsecase } from './usecase/update.supply';
 
 @Injectable()
 export class SupplyEntryService {
@@ -17,6 +18,7 @@ export class SupplyEntryService {
     private readonly findAllSupplyEntryUsecase: FindAllSupplyEntryUsecase,
     private readonly findByIdUsecase: FindByIdUsecase,
     private readonly deleteSupplyUsecase: DeleteSupplyUsecase,
+    private readonly updateSupplyUsecase: UpdateSupplyUsecase,
   ) {}
 
   async create(
@@ -34,18 +36,10 @@ export class SupplyEntryService {
     return await this.findByIdUsecase.execute(id);
   }
 
-  // async update(id: string, supplyEntry: UpdateSupplyEntryDto): Promise<string> {
-  //   // Colocar um verificação se a quatidade de entrada também foi alterada
-  //   const findOne = await this.findOne(id);
-
-  //   const updateSupplyEntry = Object.assign(findOne, supplyEntry);
-  //   this._supply_entry.map((findSupply, index) => {
-  //     if (findSupply.id === id) {
-  //       this._supply_entry.splice(index, 1, updateSupplyEntry);
-  //     }
-  //   });
-  //   return 'Entrada de insumo atualizada com sucesso';
-  // }
+  async update(id: string, supplyEntry: UpdateSupplyEntryDto): Promise<string> {
+    await this.updateSupplyUsecase.execute(id, supplyEntry);
+    return 'Entrada de insumo atualizada com sucesso';
+  }
 
   async remove(id: string): Promise<string> {
     await this.deleteSupplyUsecase.execute(id);
