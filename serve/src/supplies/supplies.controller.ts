@@ -42,7 +42,7 @@ export class SuppliesController {
   @Get('/find-one/:id')
   async findOne(@Param('id') id: string, @Res() res: Response) {
     try {
-      res.status(200).send(await this.suppliesService.findOne(id));
+      res.status(200).send(await this.suppliesService.findById(id));
     } catch (error) {
       console.log(error);
       res.status(404).send(error.message);

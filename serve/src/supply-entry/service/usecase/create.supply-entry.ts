@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ProfileRepository } from 'src/profile/service/profile.repository';
 import { ProfileService } from 'src/profile/service/profile.service';
 import { SuppliesService } from 'src/supplies/service/supplies.service';
-import { SupplyRepository } from 'src/supplies/service/supply.repository';
-import { SupplyEntry } from 'src/supply-entry/entities/supply-entry.entity';
 import { CreateSupplyEntryValidation } from 'src/supply-entry/validations/createSupply.validation';
 import { CreateSupplyEntryDto } from '../dto/create-supply-entry.dto';
 import { SupplyEntryRepository } from '../supply-entry.respository';
@@ -20,15 +17,13 @@ export class CreateSupplyEntryUsecase {
     supplyEntry: CreateSupplyEntryDto,
     profileId: string,
   ): Promise<string> {
-    const supply = await this.suppliesService.findOne(supplyEntry.supplyId);
+    const supply = await this.suppliesService.findById(supplyEntry.supplyId);
 
     await this.profileService.findOne(profileId);
 
     const verifySupplyEntry = new CreateSupplyEntryValidation(
-      {
-        ...supplyEntry,
-        profileId,
-      },
+      supplyEntry,
+      profileId,
       supply.name,
       supply.unity,
     );

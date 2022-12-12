@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { connect } from 'rxjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SupplyEntry } from '../entities/supply-entry.entity';
 import { UpdateSupplyEntryDto } from './dto/update-supply-entry.dto';
@@ -14,15 +13,8 @@ export class SupplyEntryRepository {
 
   async findAll(): Promise<SupplyEntry[]> {
     return await this.prismaService.supply_entry.findMany({
-      select: {
-        id: true,
-        supplyId: true,
-        profileId: true,
-        name_supply: true,
-        amount: true,
-        entry_date: true,
-        unity: true,
-        supply: true,
+      include: {
+        supply: { select: { name: true } },
       },
     });
   }

@@ -11,7 +11,9 @@ import {
 import { SupplyEntryService } from './service/supply-entry.service';
 import { CreateSupplyEntryDto } from './service/dto/create-supply-entry.dto';
 import { UpdateSupplyEntryDto } from './service/dto/update-supply-entry.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Supply Entry')
 @Controller('/supply-entry')
 export class SupplyEntryController {
   constructor(private readonly supplyEntryService: SupplyEntryService) {}

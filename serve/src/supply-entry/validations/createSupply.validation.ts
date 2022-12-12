@@ -6,7 +6,8 @@ import { CreateSupplyEntryDto } from '../service/dto/create-supply-entry.dto';
 
 export class CreateSupplyEntryValidation extends SupplyEntry {
   constructor(
-    { supplyId, amount, profileId }: CreateSupplyEntryDto,
+    { supplyId, amount }: CreateSupplyEntryDto,
+    profileId: string,
     name_supply: string,
     unity: string,
   ) {

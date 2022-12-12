@@ -8,11 +8,6 @@ export class CreateSupplyEntryDto {
   supplyId: string;
 
   @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  profileId: string;
-
-  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   amount: number;

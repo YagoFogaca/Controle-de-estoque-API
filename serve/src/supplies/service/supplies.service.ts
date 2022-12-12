@@ -12,8 +12,6 @@ import { SupplyOutputUsecase } from './usecase/output.supply';
 
 @Injectable()
 export class SuppliesService {
-  private _supplies: Supply[] = [];
-
   constructor(
     private readonly createSupplyUsecase: CreateSupplyUsecase,
     private readonly findAllUsecase: FindAllUsecase,
@@ -33,7 +31,7 @@ export class SuppliesService {
     return await this.findAllUsecase.execute();
   }
 
-  async findOne(id: string): Promise<Supply> {
+  async findById(id: string): Promise<Supply> {
     return this.findByIdUsecase.execute(id);
   }
 

@@ -8,7 +8,6 @@ export class FindByIdUsecase {
 
   async execute(id: string): Promise<SupplyEntry> {
     const supplyEntry = await this.supplyEntryRepository.findById(id);
-
     if (!supplyEntry) {
       throw new Error('Nenhuma entrada de insumo com esse id');
     }

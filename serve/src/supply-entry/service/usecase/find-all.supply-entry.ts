@@ -6,7 +6,11 @@ import { SupplyEntryRepository } from '../supply-entry.respository';
 export class FindAllSupplyEntryUsecase {
   constructor(private readonly supplyEntryRepository: SupplyEntryRepository) {}
 
-  async execute(): Promise<SupplyEntry[]> {
-    return await this.supplyEntryRepository.findAll();
+  async execute(): Promise<SupplyEntry[] | string> {
+    const suppliesEntry = await this.supplyEntryRepository.findAll();
+    if (suppliesEntry.length <= 0) {
+      return 'Não a entradas de insumos registrados';
+    }
+    return suppliesEntry;
   }
 }

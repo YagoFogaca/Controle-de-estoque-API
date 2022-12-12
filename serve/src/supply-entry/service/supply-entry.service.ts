@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { SuppliesService } from 'src/supplies/service/supplies.service';
-import { IdGenerator } from 'src/utils/id-generator/id-generator';
 import { CreateSupplyEntryDto } from './dto/create-supply-entry.dto';
 import { UpdateSupplyEntryDto } from './dto/update-supply-entry.dto';
 import { SupplyEntry } from '../entities/supply-entry.entity';
-import { ProfileService } from '../../profile/service/profile.service';
 import { CreateSupplyEntryUsecase } from './usecase/create.supply-entry';
 import { FindAllSupplyEntryUsecase } from './usecase/find-all.supply-entry';
 import { FindByIdUsecase } from './usecase/findById.supply-entry';
@@ -28,7 +25,7 @@ export class SupplyEntryService {
     return await this.createSupplyEntry.execute(supplyEntry, profileId);
   }
 
-  async findAll(): Promise<SupplyEntry[]> {
+  async findAll(): Promise<SupplyEntry[] | string> {
     return this.findAllSupplyEntryUsecase.execute();
   }
 
