@@ -7,7 +7,9 @@ import {
   Param,
   Delete,
   Query,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { SupplyEntryService } from './service/supply-entry.service';
 import { CreateSupplyEntryDto } from './service/dto/create-supply-entry.dto';
 import { UpdateSupplyEntryDto } from './service/dto/update-supply-entry.dto';
@@ -22,34 +24,66 @@ export class SupplyEntryController {
   async create(
     @Query('id_profile') id_profile: string,
     @Body() createSupplyEntryDto: CreateSupplyEntryDto,
+    @Res() res: Response,
   ) {
-    console.log(id_profile);
-    return await this.supplyEntryService.create(
-      createSupplyEntryDto,
-      id_profile,
-    );
+    try {
+      res
+        .status(201)
+        .send(
+          await this.supplyEntryService.create(
+            createSupplyEntryDto,
+            id_profile,
+          ),
+        );
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error.message);
+    }
   }
 
   @Get('/find-all')
-  async findAll() {
-    return await this.supplyEntryService.findAll();
+  async findAll(@Res() res: Response) {
+    try {
+      res.status(200).send(await this.supplyEntryService.findAll());
+    } catch (error) {
+      console.log(error);
+      res.status(404).send(error.message);
+    }
   }
 
   @Get('/find-one/:id')
-  async findById(@Param('id') id: string) {
-    return await this.supplyEntryService.findById(id);
+  async findById(@Param('id') id: string, @Res() res: Response) {
+    try {
+      res.status(200).send(await this.supplyEntryService.findById(id));
+    } catch (error) {
+      console.log(error);
+      res.status(404).send(error.message);
+    }
   }
 
   @Patch('/update/:id')
   async update(
     @Param('id') id: string,
     @Body() updateSupplyEntryDto: UpdateSupplyEntryDto,
+    @Res() res: Response,
   ) {
-    return await this.supplyEntryService.update(id, updateSupplyEntryDto);
+    try {
+      res
+        .status(200)
+        .send(await this.supplyEntryService.update(id, updateSupplyEntryDto));
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error.message);
+    }
   }
 
   @Delete('/delete/:id')
-  remove(@Param('id') id: string) {
-    return this.supplyEntryService.remove(id);
+  async remove(@Param('id') id: string, @Res() res: Response) {
+    try {
+      res.status(200).send(await this.supplyEntryService.remove(id));
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error.message);
+    }
   }
 }
