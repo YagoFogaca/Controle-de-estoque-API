@@ -1,4 +1,3 @@
-import { Supply } from 'src/supplies/entities/supply.entity';
 import { SupplyRepository } from '../supply.repository';
 import { Injectable } from '@nestjs/common';
 
@@ -7,11 +6,16 @@ export class DeleteSupplyUsecase {
   constructor(private readonly supplyRepository: SupplyRepository) {}
 
   async execute(id: string): Promise<string> {
-    const supplyDeleted = await this.supplyRepository.delete(id);
-    if (!supplyDeleted) {
-      throw new Error('Não foi possível deletar um insumo');
-    }
+    try {
+      const supplyDeleted = await this.supplyRepository.delete(id);
+      if (!supplyDeleted) {
+        throw new Error('Insumo não foi encontrado');
+      }
 
-    return 'Insumo deletado com sucesso';
+      return 'Insumo deletado com sucesso';
+    } catch (error) {
+      console.log(error);
+      throw new Error('Insumo não foi encontrado');
+    }
   }
 }

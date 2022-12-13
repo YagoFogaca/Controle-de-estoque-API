@@ -59,10 +59,16 @@ export class ProfileService {
   }
 
   async remove(id: string): Promise<string> {
-    const profileDeleted = await this.profileRepository.delete(id);
-    if (!profileDeleted) {
+    try {
+      const profileDeleted = await this.profileRepository.delete(id);
+      if (!profileDeleted) {
+        throw new Error('Usuário não encontrado.');
+      }
+
+      return 'Profile deletado com sucesso';
+    } catch (error) {
+      console.log(error);
       throw new Error('O profile não encontrado.');
     }
-    return 'Profile deletado com sucesso';
   }
 }

@@ -10,12 +10,20 @@ export class DeleteSupplyUsecase {
   ) {}
 
   async execute(id: string): Promise<string> {
-    const supplyEntry = await this.supplyEntryRepository.delete(id);
+    try {
+      const supplyEntry = await this.supplyEntryRepository.delete(id);
+      if (!supplyEntry) {
+        throw new Error('Usuário não encontrado.');
+      }
 
-    await this.suppliesService.supplyOutput(
-      supplyEntry.supplyId,
-      supplyEntry.amount,
-    );
-    return 'Entrada deletada com sucesso';
+      await this.suppliesService.supplyOutput(
+        supplyEntry.supplyId,
+        supplyEntry.amount,
+      );
+      return 'Entrada deletada com sucesso';
+    } catch (error) {
+      console.log(error);
+      throw new Error('Entrada não foi encontrada');
+    }
   }
 }
