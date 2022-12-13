@@ -12,7 +12,7 @@ async function bootstrap() {
     .setTitle('Gerenciador de Estoque')
     .setDescription('Aplicação para gerenciar um estoque')
     .setVersion('1.0.0')
-    .addTag('Users')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
