@@ -71,4 +71,8 @@ export class ProfileService {
       throw new Error('O profile não encontrado.');
     }
   }
+
+  async findAllByIdProfile(id: string): Promise<Profile> {
+    return await this.profileRepository.findAllByIdProfile(id);
+  }
 }

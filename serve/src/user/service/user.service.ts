@@ -74,4 +74,8 @@ export class UserService {
       throw new Error('Usuário não encontrado');
     }
   }
+
+  async findAllByIdUser(id: string) {
+    return await this.repository.findAllByIdUser(id);
+  }
 }

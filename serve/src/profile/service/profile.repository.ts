@@ -35,4 +35,11 @@ export class ProfileRepository {
   async delete(id: string): Promise<Profile> {
     return await this.service.profile.delete({ where: { id: id } });
   }
+
+  async findAllByIdProfile(id: string): Promise<Profile> {
+    return await this.service.profile.findFirst({
+      where: { id: id },
+      include: { supply_entry: true, _count: true },
+    });
+  }
 }
