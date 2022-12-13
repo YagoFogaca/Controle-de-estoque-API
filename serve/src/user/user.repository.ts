@@ -30,16 +30,12 @@ export class UserRepository {
     return await this.prisma.user.delete({ where: { id: id } });
   }
 
-  async getByEmail(email: string): Promise<boolean> {
+  async getByEmail(email: string): Promise<IUserEntity> {
     const verifyEmail = await this.prisma.user.findFirst({
       where: { email: email },
     });
 
-    if (!verifyEmail) {
-      return true;
-    }
-
-    return false;
+    return verifyEmail;
   }
 
   async getByCpf(cpf: string): Promise<boolean> {
