@@ -28,4 +28,3 @@ export class AuthController {
     return await this.userService.getAll();
   }
 }
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhYjBlNDE5LTcxNWQtNDczMy05YjQ3LTVkOWM2Nzk0NDM2OSIsIm5hbWUiOiJCcmVuZMOjbyBCb2xhZMOjbyIsImVtYWlsIjoiYnJlbmRhQGdtYWlsLmNvbSIsImNwZiI6IjEyMzQ1Njc4OTExIiwicm9sZSI6InByb2ZpbGUiLCJpYXQiOjE2NzA4OTQ1NzgsImV4cCI6MTY3MDkzNzc3OH0.h5aeQRKsiz2j6xiPULU1MpcIoqJE1vArL_QzNW-znLc
