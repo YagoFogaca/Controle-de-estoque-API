@@ -29,7 +29,7 @@ export class UserService {
 
   async create(user: UserDto): Promise<IUserEntity> {
     const verifyEmail = await this.repository.getByEmail(user.email);
-    if (!verifyEmail) {
+    if (verifyEmail) {
       throw new Error('Email já registrado');
     }
 
@@ -41,6 +41,15 @@ export class UserService {
     const userEntity = new UserEntity(user);
     const userCreated = await this.repository.create(userEntity.verifyUser());
     return userCreated;
+  }
+
+  async login(email: string): Promise<IUserEntity> {
+    const userLogin = await this.repository.getByEmail(email);
+    if (!userLogin) {
+      throw new Error('Não a email registrado');
+    }
+
+    return userLogin;
   }
 
   async update(user: PartialUserDto, id: string): Promise<IUserEntity> {
