@@ -7,18 +7,23 @@ import {
   Patch,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { PartialUserDto } from './service/dto/partialUser.dto';
 import { UserDto } from './service/dto/user.dto';
 import { UserService } from './service/user.service';
 import { Response } from 'express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { IsAdminAuthorization } from 'src/auth/decorators/admin.decorator';
 
 @ApiTags('Users')
 @Controller('/users')
 export class UserController {
   constructor(private readonly service: UserService) {}
 
+  @UseGuards(AuthGuard(), IsAdminAuthorization)
+  @ApiBearerAuth()
   @Get('/')
   async getAllUsers(@Res() res: Response) {
     try {
@@ -30,6 +35,8 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard(), IsAdminAuthorization)
+  @ApiBearerAuth()
   @Get('/get-user/:id')
   async getByIdUser(@Param('id') id: string, @Res() res: Response) {
     try {
@@ -52,6 +59,8 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard(), IsAdminAuthorization)
+  @ApiBearerAuth()
   @Patch('/update-user/:id')
   async updateUser(
     @Body() user: PartialUserDto,
@@ -71,6 +80,8 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard(), IsAdminAuthorization)
+  @ApiBearerAuth()
   @Delete('/delete-user/:id')
   async deleteUser(@Param('id') id: string, @Res() res: Response) {
     try {

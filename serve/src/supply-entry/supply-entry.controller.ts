@@ -8,18 +8,22 @@ import {
   Delete,
   Query,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { SupplyEntryService } from './service/supply-entry.service';
 import { CreateSupplyEntryDto } from './service/dto/create-supply-entry.dto';
 import { UpdateSupplyEntryDto } from './service/dto/update-supply-entry.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Supply Entry')
 @Controller('/supply-entry')
 export class SupplyEntryController {
   constructor(private readonly supplyEntryService: SupplyEntryService) {}
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Post('/create')
   async create(
     @Query('id_profile') id_profile: string,
@@ -41,6 +45,8 @@ export class SupplyEntryController {
     }
   }
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Get('/find-all')
   async findAll(@Res() res: Response) {
     try {
@@ -51,6 +57,8 @@ export class SupplyEntryController {
     }
   }
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Get('/find-one/:id')
   async findById(@Param('id') id: string, @Res() res: Response) {
     try {
@@ -61,6 +69,8 @@ export class SupplyEntryController {
     }
   }
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Patch('/update/:id')
   async update(
     @Param('id') id: string,
@@ -77,6 +87,8 @@ export class SupplyEntryController {
     }
   }
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Delete('/delete/:id')
   async remove(@Param('id') id: string, @Res() res: Response) {
     try {

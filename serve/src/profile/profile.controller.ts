@@ -7,18 +7,22 @@ import {
   Param,
   Delete,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ProfileService } from './service/profile.service';
 import { CreateProfileDto } from './service/dto/create-profile.dto';
 import { UpdateProfileDto } from './service/dto/update-profile.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Profiles')
 @Controller('/profile')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Post('/create')
   async create(
     @Body() createProfileDto: CreateProfileDto,
@@ -32,6 +36,8 @@ export class ProfileController {
     }
   }
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Get('/find-all')
   async findAll(@Res() res: Response) {
     try {
@@ -42,6 +48,8 @@ export class ProfileController {
     }
   }
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Get('/find-one/:id')
   async findOne(@Param('id') id: string, @Res() res: Response) {
     try {
@@ -52,6 +60,8 @@ export class ProfileController {
     }
   }
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Patch('/update/:id')
   async update(
     @Param('id') id: string,
@@ -68,6 +78,8 @@ export class ProfileController {
     }
   }
 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Delete('/delete/:id')
   async remove(@Param('id') id: string, @Res() res: Response) {
     try {

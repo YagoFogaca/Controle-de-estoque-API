@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
 import { DataBaseModule } from 'src/prisma/database.module';
 import { ProfileModule } from 'src/profile/profile.module';
 import { ProfileService } from 'src/profile/service/profile.service';
@@ -14,7 +15,12 @@ import { UpdateSupplyUsecase } from './service/usecase/update.supply';
 import { SupplyEntryController } from './supply-entry.controller';
 
 @Module({
-  imports: [DataBaseModule, SuppliesModule, ProfileModule],
+  imports: [
+    DataBaseModule,
+    SuppliesModule,
+    ProfileModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+  ],
   controllers: [SupplyEntryController],
   providers: [
     SupplyEntryService,
